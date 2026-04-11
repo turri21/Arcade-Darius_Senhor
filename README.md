@@ -74,14 +74,21 @@ Output: `output_files/Darius.rbf` (~3.9 MB).
 ## Running on MiSTer
 
 The [releases/](releases/) folder contains the pre-built bitstream and
-ready-to-use MRA files for all supported ROM sets:
+the parent MRA for the reference ROM set:
 
 - `Darius_YYYYMMDD.rbf` — pre-built core bitstream
-- `Darius (World).mra`
+- `Darius (World).mra` — parent MRA (reference set)
+
+Alternative ROM sets are provided in [releases/alternatives/](releases/alternatives/):
+
 - `Darius (US).mra`
 - `Darius (Japan).mra`
 - `Darius (Japan, rev 1).mra`
 - `Darius Extra Version (Japan).mra`
+
+Following the MiSTer-devel convention, the alternative sets are also
+mirrored to the official [MRA-Alternatives_MiSTer](https://github.com/MiSTer-devel/MRA-Alternatives_MiSTer)
+repository, where they are picked up automatically by **Update_All**.
 
 Steps:
 
@@ -110,7 +117,9 @@ Arcade-Darius_MiSTer/
 │   ├── pll/          Clock PLL
 │   └── sdram.sv      SDRAM controller (Sorgelig)
 ├── sys/              MiSTer framework (Sorgelig / MiSTer-devel)
-├── releases/         Pre-built .rbf bitstreams
+├── releases/         Pre-built .rbf + parent MRA
+│   └── alternatives/ MRA files for alternate ROM sets
+├── docs/             Screenshots
 ├── Darius.qpf        Quartus project
 ├── Darius.qsf        Quartus assignments
 ├── Template.sv       Top-level wrapper
