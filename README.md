@@ -53,12 +53,13 @@ supported ROM sets and has been tested on real MiSTer hardware.
 - Terasic DE10-Nano
 - MiSTer I/O board (recommended)
 - SDRAM module (32 MB or 64 MB)
-- HDMI display with **Direct Video** mode enabled (recommended)
+- HDMI display or **Direct Video** for analog output (15 kHz CRT)
 
-**Note on analog output**: Darius runs at 864×224, which is not a standard
-arcade resolution. The analog I/O board is **not currently supported** —
-use **Direct Video** over HDMI for best results. A dedicated analog output
-path may be added in future versions.
+**Note on video output**: The core works on standard HDMI displays.
+For analog output on 15 kHz arcade monitors or CRT, enable **Direct Video**
+in the MiSTer main menu. **Do not use Direct Video on VGA monitors** (31 kHz)
+— use the normal MiSTer analog output instead. Native analog I/O board
+output is not yet fully supported due to the non-standard 864×224 resolution.
 
 ## Build from source
 
