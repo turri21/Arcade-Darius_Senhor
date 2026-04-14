@@ -15,7 +15,10 @@ set_global_assignment -name SYSTEMVERILOG_FILE rtl/darius/darius_shared_ram.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/darius/darius_local_ram.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/darius/darius_panel_renderer.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/darius/darius_fg_renderer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/darius/darius_vram_arbiter.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/darius/darius_sprite_renderer.sv
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/darius/tile_rom_arbiter.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/darius/rom_cache.sv
 set_global_assignment -name VERILOG_FILE rtl/jtframe/jtframe_tilemap.v
 set_global_assignment -name VERILOG_FILE rtl/jtframe/jtframe_68kdtack_cen.v
 set_global_assignment -name VERILOG_FILE rtl/jtframe/jtframe_freqinfo.v
