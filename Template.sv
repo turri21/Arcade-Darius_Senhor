@@ -162,7 +162,7 @@ always @(posedge clk_sys) begin
 	end
 end
 wire pause = pause_toggle | status[17];  // pad OR OSD
-assign HDMI_FREEZE = pause;
+assign HDMI_FREEZE = 1'b0;  // overlay pause renderizzato real-time, no freeze scaler
 assign HDMI_BLACKOUT = 0;
 assign HDMI_BOB_DEINT = 0;
 
@@ -196,9 +196,10 @@ localparam CONF_STR = {
 	"-;",
 	"P1,Video;",
 	"P1O[122:121],Aspect ratio,Original,Full Screen,[ARC1],[ARC2];",
-	"P1O[6:5],Scale,Normal,V-Integer,Narrower HV-Integer;",
+	"P1O[6:5],Scale,Narrower HV-Integer,V-Integer,HV-Integer;",
 	"-;",
 	"O[17],Pause,Off,On;",
+	"O[18],Clean Pause,Off,On;",
 	"-;",
 	"DIP;",
 	"-;",
@@ -556,9 +557,21 @@ assign CE_PIXEL  = ce_pix;
 assign VGA_HS    = HSync;
 assign VGA_VS    = VSync;
 
-assign VGA_R     = video_r;
-assign VGA_G     = video_g;
-assign VGA_B     = video_b;
+// Pause overlay: dim video + logo 48x48 al centro durante pausa.
+// OSD "Clean Pause" (status[18]): ON=video raw senza addon, OFF=overlay attivo.
+pause_overlay u_pause_ovl (
+	.clk       (clk_sys),
+	.pause     (pause),
+	.clean     (status[18]),
+	.render_x  (render_x),
+	.render_y  (render_y),
+	.rgb_r_in  (video_r),
+	.rgb_g_in  (video_g),
+	.rgb_b_in  (video_b),
+	.rgb_r_out (VGA_R),
+	.rgb_g_out (VGA_G),
+	.rgb_b_out (VGA_B)
+);
 
 // Aspect ratio: Original = 4:1 (3x 4:3 monitors), Full Screen = 0:0
 wire [11:0] arx = (!ar) ? 12'd4 : (ar - 1'd1);
@@ -580,7 +593,9 @@ video_freak video_freak
 	.ARY(ary),
 	.CROP_SIZE(12'd0),
 	.CROP_OFF(5'd0),
-	.SCALE({1'b0, status[6:5]})
+	.SCALE((status[6:5] == 2'd0) ? 3'd2 :   // Narrower HV-Integer (default, = HV-Integer-)
+	        (status[6:5] == 2'd1) ? 3'd1 :   // V-Integer
+	                                3'd4)    // HV-Integer
 );
 
 // LED: blink during download

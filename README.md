@@ -11,8 +11,21 @@ and hardware observation on original PCBs.
 
 ## Status
 
-First public release. The core runs the full game end-to-end on all
-supported ROM sets and has been tested on real MiSTer hardware.
+**Current version: 1.1** (May 2026)
+
+The core runs the full game end-to-end on all supported ROM sets and
+has been tested on real MiSTer hardware.
+
+**What's new in v1.1**
+- Pause overlay with project logo, scrolling supporters list (with tier
+  colors: Bronze / Silver / Gold), and social links — your name in the
+  credits if you support the project
+- "Clean Pause" OSD option to bypass overlay (pause without dim/logo)
+- Scale options refactored: Narrower HV-Integer (default), V-Integer,
+  HV-Integer (Normal scaling removed — gave wrong results without
+  precise user setup)
+- HDMI_FREEZE removed (overlay rendered live, no scaler freeze)
+- SignalTap probes removed (frees ~6 M10K)
 
 **Features**
 - Dual 68000 main/sub with shared RAM (FX68K core)
@@ -25,6 +38,7 @@ supported ROM sets and has been tested on real MiSTer hardware.
 - SDRAM arbitration for tile/sprite ROM and main/sub CPU fetch
 - Inputs (coin, start, 8-way joystick) and full DIP switch support
 - MiSTer OSD with video, pause and DIP options
+- Pause overlay with supporters credits and social links
 
 **ROM sets supported**
 - Darius (World) — reference set
@@ -35,7 +49,10 @@ supported ROM sets and has been tested on real MiSTer hardware.
 
 **Notes**
 - Audio pole filters currently bypassed (direct DC-removed signals to mixer)
-- Analog I/O output not yet supported — use Direct Video over HDMI
+- 15 kHz CRT output is **not currently supported** (non-standard 864×224
+  resolution incompatible with the analog I/O board)
+- For HDMI use the HDMI output directly. For 31 kHz VGA monitors use an
+  HDMI→VGA adapter — do **not** enable Direct Video
 
 ## Screenshots
 
@@ -53,13 +70,13 @@ supported ROM sets and has been tested on real MiSTer hardware.
 - Terasic DE10-Nano
 - MiSTer I/O board (recommended)
 - SDRAM module (32 MB or 64 MB)
-- HDMI display or **Direct Video** for analog output (15 kHz CRT)
+- HDMI display (recommended), or HDMI→VGA adapter for 31 kHz VGA monitors
 
 **Note on video output**: The core works on standard HDMI displays.
-For analog output on 15 kHz arcade monitors or CRT, enable **Direct Video**
-in the MiSTer main menu. **Do not use Direct Video on VGA monitors** (31 kHz)
-— use the normal MiSTer analog output instead. Native analog I/O board
-output is not yet fully supported due to the non-standard 864×224 resolution.
+For 31 kHz VGA monitors, use an HDMI→VGA adapter — do **not** enable
+Direct Video. **15 kHz CRT output is not currently supported** because
+the 864×224 triple-panel resolution is incompatible with the MiSTer
+analog I/O board.
 
 ## Build from source
 
@@ -97,10 +114,12 @@ Steps:
 2. Copy the desired `.mra` file(s) to `_Arcade/` on the MiSTer SD card.
 3. Provide your legally-owned Darius ROM files where each MRA expects them
    (usually in `games/mame/`).
-4. Enable **Direct Video** in the MiSTer main menu for best HDMI output
-   (analog output is not currently supported — see Hardware requirements).
-5. In the core OSD, set **Video → Scale** to **Narrower HV-Integer** to
-   get a proper integer-scaled image on modern HDMI displays.
+4. For HDMI displays, no special setup is required. For 31 kHz VGA
+   monitors, use an HDMI→VGA adapter (do **not** enable Direct Video).
+   15 kHz CRT output is not currently supported (see Hardware requirements).
+5. The core OSD defaults to **Narrower HV-Integer** scale, which gives a
+   proper integer-scaled image on modern HDMI displays. Other Scale
+   options (V-Integer, HV-Integer) are available for custom setups.
 
 **ROMs are NOT included in this repository.** You must provide them yourself.
 
