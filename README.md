@@ -1,3 +1,8 @@
+-=(Darius_Senhor notes)=-
+
+Tested: Working Video 720p, 1080p & Sound.
+
+___
 # Arcade-Darius_MiSTer
 
 FPGA core for **Darius** (Taito Corporation, 1986) targeting the
